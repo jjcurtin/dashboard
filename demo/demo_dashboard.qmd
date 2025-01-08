@@ -13,6 +13,7 @@ knitr::opts_chunk$set(message = FALSE, warning = FALSE)
 library(tidyverse)
 library(DT)
 library(janitor) # added for cross tabulations
+library(plotly)
 theme_bw()
 
 # Create sample dataset
@@ -55,7 +56,7 @@ sample_data <- data.frame(
 
 ```{r}
 #| title: Monthly Patient Visits
-ggplot(sample_data, aes(x=date, y=patients)) +
+plot1 <- ggplot(sample_data, aes(x=date, y=patients)) +
   geom_line(color="black", size=1) +
   geom_point(color="black") +
   labs(
@@ -67,6 +68,8 @@ ggplot(sample_data, aes(x=date, y=patients)) +
     plot.title = element_text(size=14, face="bold"),
     axis.title = element_text(size=12)
   )
+
+ggplotly(plot1)
 
  # fyi this will run inside the document, as it's mean to be self-contained
  # it won't show up in the plot viewer, unless you run it in the console
