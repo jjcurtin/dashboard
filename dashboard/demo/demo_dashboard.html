@@ -73,19 +73,17 @@ ul.task-list li input[type="checkbox"] {
         
       </div>
     </div>
-<div id="dashboard-collapse" class="navbar-collapse collapse"><ul class="navbar-nav navbar-nav-scroll me-auto" role="tablist"><li class="nav-item" role="presentation"><a id="tab-over-time" class="nav-link active" data-bs-toggle="tab" role="tab" data-bs-target="#over-time" data-scrolling="false" href="#over-time" aria-controls="over-time" aria-selected="true"><span class="nav-link-text">Over-Time</span></a></li><li class="nav-item" role="presentation"><a id="tab-monthy-stats" class="nav-link" data-bs-toggle="tab" role="tab" data-bs-target="#monthy-stats" data-scrolling="false" href="#monthy-stats" aria-controls="monthy-stats" aria-selected="false"><span class="nav-link-text">Monthy Stats</span></a></li><li class="nav-item" role="presentation"><a id="tab-cross-tabulation" class="nav-link" data-bs-toggle="tab" role="tab" data-bs-target="#cross-tabulation" data-scrolling="false" href="#cross-tabulation" aria-controls="cross-tabulation" aria-selected="false"><span class="nav-link-text">Cross Tabulation</span></a></li></ul></div></div>
+<div id="dashboard-collapse" class="navbar-collapse collapse"><ul class="navbar-nav navbar-nav-scroll me-auto" role="tablist"><li class="nav-item" role="presentation"><a id="tab-column" class="nav-link active" data-bs-toggle="tab" role="tab" data-bs-target="#column" data-scrolling="false" href="#column" aria-controls="column" aria-selected="true"><span class="nav-link-text">Column</span></a></li><li class="nav-item" role="presentation"><a id="tab-column-1" class="nav-link" data-bs-toggle="tab" role="tab" data-bs-target="#column-1" data-scrolling="false" href="#column-1" aria-controls="column-1" aria-selected="false"><span class="nav-link-text">Column</span></a></li></ul></div></div>
 </nav>
 </header>
 <div class="page-layout-custom quarto-dashboard-content bslib-gap-spacing html-fill-container bslib-page-fill quarto-dashboard-pages">  
 
 <div class="bslib-grid-item html-fill-item tab-content bslib-grid" data-layout="fill" style="display: grid; grid-template-columns: minmax(3em, 1fr);
 grid-auto-rows: minmax(0, 1fr);">
-<div id="over-time" class="dashboard-page tab-pane show active html-fill-item html-fill-container" data-orientation="columns" aria-labelledby="tab-over-time">
-<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-columns: minmax(3em, 60fr);
+<div id="column" class="dashboard-page tab-pane show active html-fill-item html-fill-container" data-orientation="columns" aria-labelledby="tab-column">
+<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-columns: minmax(3em, 1fr) minmax(3em, 1fr);
 grid-auto-rows: minmax(0, 1fr);">
-<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-rows: minmax(3em, 60fr) minmax(3em, 40fr); grid-auto-columns: minmax(0, 1fr);">
-<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-columns: minmax(3em, 1fr);
-grid-auto-rows: minmax(0, 1fr);">
+<div class="html-fill-item html-fill-container bslib-grid" data-height="60%" style="display: grid; grid-template-rows: minmax(3em, 1fr); grid-auto-columns: minmax(0, 1fr);">
 <div class="card cell html-fill-item html-fill-container bslib-card" data-title="Monthly Patient Visits" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
 <div class="card-header"><div class="card-title"><span style="display: inline">
 Monthly Patient Visits
@@ -101,17 +99,15 @@ Monthly Patient Visits
         <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" style="height:1em;width:1em;" aria-hidden="true" role="img"><path d="M20 5C20 4.4 19.6 4 19 4H13C12.4 4 12 3.6 12 3C12 2.4 12.4 2 13 2H21C21.6 2 22 2.4 22 3V11C22 11.6 21.6 12 21 12C20.4 12 20 11.6 20 11V5ZM4 19C4 19.6 4.4 20 5 20H11C11.6 20 12 20.4 12 21C12 21.6 11.6 22 11 22H3C2.4 22 2 21.6 2 21V13C2 12.4 2.4 12 3 12C3.6 12 4 12.4 4 13V19Z"></path></svg>
     </span>
 </bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
-</div>
-<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-columns: minmax(3em, 1fr);
-grid-auto-rows: minmax(0, 1fr);">
+</div><div class="html-fill-item html-fill-container bslib-grid" data-height="40%" style="display: grid; grid-template-rows: minmax(3em, 1fr); grid-auto-columns: minmax(0, 1fr);">
 <div class="card cell html-fill-item html-fill-container bslib-card" data-title="Key Metrics" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
 <div class="card-header"><div class="card-title"><span style="display: inline">
 Key Metrics
 </span></div></div>
 <div class="card-body html-fill-item html-fill-container">
 <div class="cell-output-display html-fill-item html-fill-container">
-<div class="datatables html-widget html-fill-item html-fill-container" id="htmlwidget-589fed18d622a76f1d8b" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-589fed18d622a76f1d8b">{"x":{"filter":"none","vertical":false,"data":[["Average Patients","Average Age","Average Satisfaction"],[102.9,43.2,8.6]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Metric<\/th>\n      <th>Value<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"bPaginate":false,"dom":"t","language":{"info":"Showing _TOTAL_ entries"},"pageLength":10,"searching":false,"ordering":false,"columnDefs":[{"className":"dt-right","targets":1},{"name":"Metric","targets":0},{"name":"Value","targets":1}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item html-fill-container" id="htmlwidget-ce28ae593bde0f735d05" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-ce28ae593bde0f735d05">{"x":{"filter":"none","vertical":false,"data":[["Average Patients","Average Age","Average Satisfaction"],[102.9,43.2,8.6]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Metric<\/th>\n      <th>Value<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"bPaginate":false,"dom":"t","language":{"info":"Showing _TOTAL_ entries"},"pageLength":10,"searching":false,"ordering":false,"columnDefs":[{"className":"dt-right","targets":1},{"name":"Metric","targets":0},{"name":"Value","targets":1}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
@@ -122,8 +118,7 @@ Key Metrics
 </bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
 </div>
 </div>
-</div>
-</div><div id="monthy-stats" class="dashboard-page tab-pane grid-skip html-fill-item html-fill-container" data-orientation="columns" aria-labelledby="tab-monthy-stats">
+</div><div id="column-1" class="dashboard-page tab-pane grid-skip html-fill-item html-fill-container" data-orientation="columns" aria-labelledby="tab-column-1">
 <div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-columns: minmax(3em, 1fr);
 grid-auto-rows: minmax(0, 1fr);">
 <div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-rows: minmax(3em, 1fr); grid-auto-columns: minmax(0, 1fr);">
@@ -133,30 +128,8 @@ Monthly Statistics
 </span></div></div>
 <div class="card-body html-fill-item html-fill-container">
 <div class="cell-output-display html-fill-item html-fill-container">
-<div class="datatables html-widget html-fill-item html-fill-container" id="htmlwidget-9e786d9d3fe28ddcdfc6" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-9e786d9d3fe28ddcdfc6">{"x":{"filter":"none","vertical":false,"data":[["January","February","March","April","May","June","July","August","September","October","November","December"],[92,97,123,101,102,126,107,81,90,93,118,105],[48,46,41,59,49,29,51,41,36,43,37,39],[8.199999999999999,7.7,8.9,8.6,7.9,9.1,8.699999999999999,8.4,8.9,8.9,8.9,8.800000000000001]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Month<\/th>\n      <th>patients<\/th>\n      <th>Avg Age<\/th>\n      <th>Satisfaction<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"bPaginate":false,"dom":"ifrt","language":{"info":"Showing _TOTAL_ entries"},"pageLength":12,"searching":false,"columnDefs":[{"className":"dt-right","targets":[1,2,3]},{"name":"Month","targets":0},{"name":"patients","targets":1},{"name":"Avg Age","targets":2},{"name":"Satisfaction","targets":3}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[10,12,25,50,100]}},"evals":[],"jsHooks":[]}</script>
-</div>
-</div>
-<bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
-    <template>Expand</template>
-    <span class="bslib-full-screen-enter badge rounded-pill">
-        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" style="height:1em;width:1em;" aria-hidden="true" role="img"><path d="M20 5C20 4.4 19.6 4 19 4H13C12.4 4 12 3.6 12 3C12 2.4 12.4 2 13 2H21C21.6 2 22 2.4 22 3V11C22 11.6 21.6 12 21 12C20.4 12 20 11.6 20 11V5ZM4 19C4 19.6 4.4 20 5 20H11C11.6 20 12 20.4 12 21C12 21.6 11.6 22 11 22H3C2.4 22 2 21.6 2 21V13C2 12.4 2.4 12 3 12C3.6 12 4 12.4 4 13V19Z"></path></svg>
-    </span>
-</bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
-</div>
-</div>
-</div><div id="cross-tabulation" class="dashboard-page tab-pane grid-skip html-fill-item html-fill-container" data-orientation="columns" aria-labelledby="tab-cross-tabulation">
-<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-columns: minmax(3em, 1fr);
-grid-auto-rows: minmax(0, 1fr);">
-<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-rows: minmax(3em, 1fr); grid-auto-columns: minmax(0, 1fr);">
-<div class="card cell html-fill-item html-fill-container bslib-card" data-title="Department and Insurance Cross-Tabulation" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
-<div class="card-header"><div class="card-title"><span style="display: inline">
-Department and Insurance Cross-Tabulation
-</span></div></div>
-<div class="card-body html-fill-item html-fill-container">
-<div class="cell-output-display html-fill-item html-fill-container">
-<div class="datatables html-widget html-fill-item html-fill-container" id="htmlwidget-4296f5794e54a4873249" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-4296f5794e54a4873249">{"x":{"filter":"none","vertical":false,"caption":"<caption>Department by Insurance Type (Row %)<\/caption>","data":[["Internal","Pediatrics","Surgery"],["0.00% (0)","0.00% (0)","40.00% (2)"],["0.00% (0)","33.33% (2)","60.00% (3)"],["100.00% (1)","66.67% (4)","0.00% (0)"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>department/insurance<\/th>\n      <th>None<\/th>\n      <th>Private<\/th>\n      <th>Public<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"bPaginate":false,"dom":"t","language":{"info":"Showing _TOTAL_ entries"},"pageLength":10,"searching":false,"columnDefs":[{"name":"department/insurance","targets":0},{"name":"None","targets":1},{"name":"Private","targets":2},{"name":"Public","targets":3}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item html-fill-container" id="htmlwidget-eac75555269eefd07531" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-eac75555269eefd07531">{"x":{"filter":"none","vertical":false,"data":[["January","February","March","April","May","June","July","August","September","October","November","December"],[92,97,123,101,102,126,107,81,90,93,118,105],[48,46,41,59,49,29,51,41,36,43,37,39],[8.199999999999999,7.7,8.9,8.6,7.9,9.1,8.699999999999999,8.4,8.9,8.9,8.9,8.800000000000001]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Month<\/th>\n      <th>patients<\/th>\n      <th>Avg Age<\/th>\n      <th>Satisfaction<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"bPaginate":false,"dom":"ifrt","language":{"info":"Showing _TOTAL_ entries"},"pageLength":12,"searching":false,"columnDefs":[{"className":"dt-right","targets":[1,2,3]},{"name":"Month","targets":0},{"name":"patients","targets":1},{"name":"Avg Age","targets":2},{"name":"Satisfaction","targets":3}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[10,12,25,50,100]}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">

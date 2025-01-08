@@ -12,7 +12,6 @@ format:
 knitr::opts_chunk$set(message = FALSE, warning = FALSE)
 library(tidyverse)
 library(DT)
-library(janitor) # added for cross tabulations
 theme_bw()
 
 # Create sample dataset
@@ -22,9 +21,7 @@ sample_data <- data.frame(
   date = dates,
   patients = round(rnorm(length(dates), mean=100, sd=15)),
   age = round(rnorm(length(dates), mean=45, sd=8)),
-  satisfaction = round(rnorm(length(dates), mean=8.5, sd=0.5), 1),
-  department = sample(c("Internal", "Surgery", "Pediatrics"), length(dates), replace=TRUE),
-  insurance = sample(c("Private", "Public", "None"), length(dates), replace=TRUE)
+  satisfaction = round(rnorm(length(dates), mean=8.5, sd=0.5), 1)
 )
 ```
 
@@ -47,11 +44,9 @@ sample_data <- data.frame(
 
 ```
 
-# Over-Time
+# Column {width=60%}
 
-## Column {width=60%}
-
-### Row {height=60%}
+## Row {height=60%}
 
 ```{r}
 #| title: Monthly Patient Visits
@@ -72,7 +67,7 @@ ggplot(sample_data, aes(x=date, y=patients)) +
  # it won't show up in the plot viewer, unless you run it in the console
 ```
 
-### Row {height=40%}
+## Row {height=40%}
 
 ```{r}
 #| title: Key Metrics
@@ -105,7 +100,7 @@ DT::datatable(
 # (though all of them are currently disabled)
 ```
 
-# Monthy Stats {width=40%}
+# Column {width=40%}
 
 ## Row
 
@@ -125,36 +120,6 @@ DT::datatable(
     pageLength = 12,
     searching = FALSE
   ),
-  rownames = FALSE
-)
-
-```
-# Cross Tabulation {width=100%}
-
-## Row
-
-```{r}
-#| title: Department and Insurance Cross-Tabulation
-
-# Create cross tabulation with percentages using adorn from janitor
-crosstab <- sample_data |>
-  tabyl(department, insurance) |>
-  adorn_percentages("row") |> # converts counts to percentages
-  adorn_pct_formatting(digits = 2) |> # formats percentages
-  adorn_ns(position = "rear") |> # adds raw count in parenthesis (with argument for "after")
-  adorn_title("combined") # add headers for both rows and columns
-
-# Convert to data frame for DT
-crosstab_df <- as.data.frame(crosstab)
-
-DT::datatable(
-  crosstab_df,
-  options = list(
-    dom = 't',
-    pageLength = 10,
-    searching = FALSE
-  ),
-  caption = "Department by Insurance Type (Row %)",
   rownames = FALSE
 )
 ```
