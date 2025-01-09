@@ -8,7 +8,14 @@ project:
 
 website:
   title: "Demo Dashboard"
+  navbar:
+    left:
+      - text: "Home"
+        href: index.qmd
+      - text: "Dashboard"
+        href: static_dashboard/demo_dashboard.qmd
   
 format:
   html:
     theme: cosmo
+    toc: true  

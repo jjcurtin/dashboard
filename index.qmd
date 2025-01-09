@@ -2,17 +2,12 @@
 title: "Dashboard Demos"
 ---
 
-## Dashboard Examples
-
 This repository contains different types of Quarto dashboards:
 
-- [Static Dashboard](static_dashboard/demo_dashboard.qmd): A non-interactive dashboard with visualizations
-- [Interactive Dashboard](shiny_dashboard/shiny_dashboard.qmd): A Shiny-powered dashboard with real-time filtering and updates
+- [Static Dashboard](static_dashboard/demo_dashboard.qmd)
+- [Interactive Dashboard](https://christopher-janssen.shinyapps.io/shiny_dashboard/)
 
 ### Running the Dashboards
 
 1. Static Dashboard: Can be viewed directly through the website
-2. Interactive Dashboard: Must be run locally using:
-   ```bash
-   quarto serve shiny_dashboard/shiny_dashboard.qmd
-   ```
+2. Interactive Dashboard: currently being hosted at this [link](https://christopher-janssen.shinyapps.io/shiny_dashboard/)
