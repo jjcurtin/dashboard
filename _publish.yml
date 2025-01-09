@@ -1,0 +1,4 @@
+- source: project
+  quarto-pub:
+    - id: 883372aa-c025-45db-9df0-62da1477e0fe
+      url: https://christopher-janssen.quarto.pub/demo-dashboard

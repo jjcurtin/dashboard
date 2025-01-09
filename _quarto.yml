@@ -1,0 +1,10 @@
+project:
+  type: website
+  output-dir: _site
+
+website:
+  title: "Demo Dashboard"
+  
+format:
+  html:
+    theme: cosmo

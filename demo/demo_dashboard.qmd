@@ -2,8 +2,11 @@
 title: "Sample Data Dashboard"
 format: 
   dashboard:
-    orientation: columns # organizes content in vertical columns over rows
+    orientation: columns
     theme: cosmo
+project:
+  type: website  
+  output-dir: _site
 ---
 
 ```{r setup, include=FALSE}
