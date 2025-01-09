@@ -1,0 +1,233 @@
+---
+title: "Data Analysis Dashboard"
+format: 
+  dashboard:
+    orientation: columns
+    theme: cosmo
+server: shiny
+---
+
+```{r}
+#| context: setup
+#| include: false
+
+library(shiny)          
+library(tidyverse)      
+library(DT)            # For interactive tables
+library(janitor)       # For tabulation functions
+library(scales)        # For number formatting
+
+# Load and prepare datasets
+# 1. Iris Dataset
+dataset_iris <- iris
+
+# 2. Titanic Dataset 
+dataset_titanic <- titanic::titanic_train |>
+  # Select only relevant columns
+  select(Survived, Pclass, Sex, Age, Fare) |>
+  # Convert numeric survival to meaningful factors
+  mutate(
+    Survived = factor(Survived, labels = c("No", "Yes")),
+    Class = factor(Pclass, labels = c("First", "Second", "Third"))
+  )
+
+# 3. Economics Dataset
+dataset_economics <- economics |>
+  mutate(date = as.Date(date))
+
+# Define variable labels for economics data - makes the UI more user-friendly
+econ_vars <- c(
+  'Unemployment' = 'unemploy',
+  'Personal Savings Rate' = 'psavert',
+  'Median Unemployment Duration' = 'uempmed'
+)
+```
+
+# Iris Analysis Dashboard
+
+## Sidebar {.sidebar}
+```{r}
+# Simple numeric input for table pagination
+numericInput(
+  'pageLength', 
+  'Rows per page:', 
+  value = 10, 
+  min = 5, 
+  max = 50, 
+  step = 5
+)
+
+# Column selector for iris dataset
+checkboxGroupInput(
+  'iris_cols', 
+  'Columns to display:',
+  choices = names(dataset_iris),
+  selected = names(dataset_iris)
+)
+```
+
+## Column
+
+### Data Table
+```{r}
+DTOutput('iris_table')
+```
+
+# Titanic Analysis Dashboard
+
+## Sidebar {.sidebar}
+```{r}
+# Variable selectors for cross-tabulation
+selectInput(
+  'titanic_var1', 
+  'Row Variable:', 
+  choices = c('Survived', 'Sex', 'Class'),
+  selected = 'Survived'
+)
+
+selectInput(
+  'titanic_var2', 
+  'Column Variable:', 
+  choices = c('Sex', 'Class', 'Survived'),
+  selected = 'Class'
+)
+
+radioButtons(
+  'display_type',
+  'Display:',
+  choices = c(
+    'Frequencies' = 'freq',
+    'Percentages' = 'pct'
+  ),
+  selected = 'freq'
+)
+```
+
+## Column
+
+### Cross-Tabulation Results
+```{r}
+DTOutput('titanic_table')
+```
+
+# Economics Analysis Dashboard
+
+## Sidebar {.sidebar}
+```{r}
+# Variable selector for economics time series
+selectInput(
+  'econ_var', 
+  'Variable:', 
+  choices = econ_vars,
+  selected = 'unemploy'
+)
+
+# Year range selector
+sliderInput(
+  'year_range', 
+  'Year Range:',
+  min = 1967, 
+  max = 2015,
+  value = c(1967, 2015),
+  step = 1,
+  sep = ""
+)
+```
+
+## Column
+
+### Time Series Plot
+```{r}
+plotOutput('econ_plot', height = "500px")
+```
+
+
+```{r}
+#| context: server
+
+# Iris Table Renderer
+output$iris_table <- renderDT({
+  # Subset the iris data based on selected columns
+  iris_subset <- dataset_iris[, input$iris_cols, drop = FALSE]
+  
+  # Create an interactive datatable
+  datatable(
+    iris_subset,
+    options = list(
+      pageLength = input$pageLength,
+      scrollX = TRUE,
+      dom = 'Bfrtip'  # Adds export buttons
+    ),
+    filter = 'top',
+    rownames = FALSE
+  ) |>
+    # Round numeric columns to 1 decimal place
+    formatRound(
+      columns = names(iris_subset)[sapply(iris_subset, is.numeric)], 
+      digits = 1
+    )
+})
+
+# Titanic Cross-Tabulation Renderer
+output$titanic_table <- renderDT({
+  # Create base cross-tabulation
+  cross_tab <- table(
+    dataset_titanic[[input$titanic_var1]], 
+    dataset_titanic[[input$titanic_var2]]
+  )
+  
+  # Convert to desired format based on user selection
+  result <- if (input$display_type == 'freq') {
+    as.data.frame(cross_tab)
+  } else {
+    as.data.frame(prop.table(cross_tab, margin = 1))
+  }
+  
+  # Format table
+  result |>
+    pivot_wider(
+      names_from = Var2,
+      values_from = Freq,
+      values_fill = 0
+    ) |>
+    # Format percentages if selected
+    mutate(across(
+      -1,
+      ~if (input$display_type == 'pct') scales::percent(., accuracy = 0.1) else .
+    ))
+})
+
+# Economics Time Series Plot Renderer
+output$econ_plot <- renderPlot({
+  # Convert selected years to dates for filtering
+  start_date <- as.Date(paste0(input$year_range[1], "-01-01"))
+  end_date <- as.Date(paste0(input$year_range[2], "-12-31"))
+  
+  # Filter data to selected date range
+  filtered_data <- dataset_economics |>
+    filter(date >= start_date, date <= end_date)
+  
+  # Get readable variable name for plot title
+  var_label <- names(which(econ_vars == input$econ_var))
+  
+  # Create the time series plot
+  ggplot(filtered_data, aes(x = date, y = .data[[input$econ_var]])) +
+    geom_line(color = "steelblue", size = 1) +
+    theme_bw() +
+    labs(
+      title = paste("Time Series of", var_label),
+      x = "Year",
+      y = var_label
+    ) +
+    scale_x_date(
+      date_breaks = "5 years", 
+      date_labels = "%Y"
+    ) +
+    scale_y_continuous(labels = comma_format()) +
+    theme(
+      plot.title = element_text(hjust = 0.5, size = 14),
+      axis.text = element_text(size = 10),
+      axis.title = element_text(size = 12)
+    )
+})
+```

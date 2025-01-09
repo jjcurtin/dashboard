@@ -1,0 +1,10 @@
+project:
+  type: website
+  output-dir: ../_site
+
+website:
+  title: "Static Dashboard Demo"
+  navbar:
+    left:
+      - text: "Static Dashboard"
+        file: demo_dashboard.qmd

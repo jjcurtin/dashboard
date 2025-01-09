@@ -1,6 +1,10 @@
 project:
   type: website
   output-dir: _site
+  render:
+    - "*.qmd"
+    - "static_dashboard/"
+    - "!shiny_dashboard/"  # Excludes shiny_dashboard directory
 
 website:
   title: "Demo Dashboard"
