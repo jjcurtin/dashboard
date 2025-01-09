@@ -1,0 +1,4 @@
+- source: demo_dashboard.qmd
+  quarto-pub:
+    - id: 8398bef8-35c6-43d2-b95d-98a1c939069d
+      url: 'https://arc.quarto.pub/sample-data-dashboard'
