@@ -1,8 +1,18 @@
+# R project files
 .Rproj.user
 .Rhistory
 .RData
 .Ruserdata
 dashboard.Rproj
 
+# Quarto related
+
 /.quarto/
 _site/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Deployment Metadata
+rsconnect/
