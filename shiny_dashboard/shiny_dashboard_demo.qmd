@@ -30,6 +30,8 @@ dataset_titanic <- titanic::titanic_train |>
     Survived = factor(Survived, labels = c("No", "Yes")),
     Class = factor(Pclass, labels = c("First", "Second", "Third"))
   )
+titanic_vars <- c('Survived', 'Sex', 'Class')
+
 
 # 3. Economics Dataset
 dataset_economics <- economics |>
@@ -77,37 +79,23 @@ DTOutput('iris_table')
 
 ## Sidebar {.sidebar}
 ```{r}
-# Variable selectors for cross-tabulation
+# First variable selector
 selectInput(
   'titanic_var1', 
   'Row Variable:', 
-  choices = c('Survived', 'Sex', 'Class'),
+  choices = titanic_vars,
   selected = 'Survived'
 )
 
-selectInput(
-  'titanic_var2', 
-  'Column Variable:', 
-  choices = c('Sex', 'Class', 'Survived'),
-  selected = 'Class'
-)
-
-radioButtons(
-  'display_type',
-  'Display:',
-  choices = c(
-    'Frequencies' = 'freq',
-    'Percentages' = 'pct'
-  ),
-  selected = 'freq'
-)
+# Placeholder for second variable selector
+uiOutput('var2_selector')
 ```
 
 ## Column
 
 ### Cross-Tabulation Results
 ```{r}
-DTOutput('titanic_table')
+tableOutput('titanic_table')
 ```
 
 # Economics Analysis Dashboard
@@ -168,33 +156,24 @@ output$iris_table <- renderDT({
     )
 })
 
-# Titanic Cross-Tabulation Renderer
-output$titanic_table <- renderDT({
-  # Create base cross-tabulation
-  cross_tab <- table(
-    dataset_titanic[[input$titanic_var1]], 
-    dataset_titanic[[input$titanic_var2]]
+# Dynamic UI for second variable selector
+output$var2_selector <- renderUI({
+  selectInput(
+    'titanic_var2', 
+    'Column Variable:', 
+    choices = setdiff(titanic_vars, input$titanic_var1),
+    selected = if('Class' != input$titanic_var1) 'Class' else 'Sex'
   )
-  
-  # Convert to desired format based on user selection
-  result <- if (input$display_type == 'freq') {
-    as.data.frame(cross_tab)
-  } else {
-    as.data.frame(prop.table(cross_tab, margin = 1))
-  }
-  
-  # Format table
-  result |>
-    pivot_wider(
-      names_from = Var2,
-      values_from = Freq,
-      values_fill = 0
-    ) |>
-    # Format percentages if selected
-    mutate(across(
-      -1,
-      ~if (input$display_type == 'pct') scales::percent(., accuracy = 0.1) else .
-    ))
+})
+
+# Titanic Cross-Tabulation Renderer
+output$titanic_table <- renderTable({
+  req(input$titanic_var2)  # Wait until var2 is available
+  dataset_titanic |>
+    tabyl(!!sym(input$titanic_var1), !!sym(input$titanic_var2)) |>
+    adorn_percentages("row") |>
+    adorn_pct_formatting() |>
+    adorn_ns()
 })
 
 # Economics Time Series Plot Renderer
