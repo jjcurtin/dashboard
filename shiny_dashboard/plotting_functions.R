@@ -18,12 +18,12 @@ create_ts_plot <- function(data, var, var_label, units = "") {
     theme(plot.title = element_text(hjust = 0.5))
   
   # Convert to plotly and add hover template
-  ggplotly(p) %>%  # using %>% here as it's more stable with plotly
-    style(
-      hovertemplate = paste0(
-        "Date: %{x}<br>",
-        var_label, ": %{y:,.0f} ", units,
-        "<br><extra></extra>"
-      )
+  fig <- ggplotly(p)
+  
+  # Update layout to format hover date
+  fig %>% 
+    layout(
+      hoverlabel = list(bgcolor = "white"),
+      xaxis = list(hoverformat = "%b %Y")
     )
 }
