@@ -16,6 +16,7 @@ library(tidyverse)
 library(DT)            # For interactive tables
 library(janitor)       # For tabulation functions
 library(scales)        # For number formatting
+library(plotly)
 
 # Load and prepare datasets
 # 1. Iris Dataset
@@ -37,12 +38,24 @@ titanic_vars <- c('Survived', 'Sex', 'Class')
 dataset_economics <- economics |>
   mutate(date = as.Date(date))
 
-# Define variable labels for economics data - makes the UI more user-friendly
-econ_vars <- c(
-  'Unemployment' = 'unemploy',
-  'Personal Savings Rate' = 'psavert',
-  'Median Unemployment Duration' = 'uempmed'
+# Define variable labels and units for economics data
+econ_vars <- list(
+  'Unemployment' = list(
+    var = 'unemploy',
+    units = 'Thousand Persons'
+  ),
+  'Personal Savings Rate' = list(
+    var = 'psavert',
+    units = '%'
+  ),
+  'Median Unemployment Duration' = list(
+    var = 'uempmed',
+    units = 'Weeks'
+  )
 )
+# plotting function for time series
+source("plotting_functions.R")
+
 ```
 
 # Iris Analysis Dashboard
@@ -106,8 +119,8 @@ tableOutput('titanic_table')
 selectInput(
   'econ_var', 
   'Variable:', 
-  choices = econ_vars,
-  selected = 'unemploy'
+  choices = names(econ_vars),
+  selected = 'Unemployment'
 )
 
 # Year range selector
@@ -126,7 +139,7 @@ sliderInput(
 
 ### Time Series Plot
 ```{r}
-plotOutput('econ_plot', height = "500px")
+plotlyOutput('econ_plot', height = "500px")
 ```
 
 
@@ -177,36 +190,18 @@ output$titanic_table <- renderTable({
 })
 
 # Economics Time Series Plot Renderer
-output$econ_plot <- renderPlot({
-  # Convert selected years to dates for filtering
-  start_date <- as.Date(paste0(input$year_range[1], "-01-01"))
-  end_date <- as.Date(paste0(input$year_range[2], "-12-31"))
+output$econ_plot <- renderPlotly({
+  selected_var <- econ_vars[[input$econ_var]]
   
-  # Filter data to selected date range
-  filtered_data <- dataset_economics |>
-    filter(date >= start_date, date <= end_date)
-  
-  # Get readable variable name for plot title
-  var_label <- names(which(econ_vars == input$econ_var))
-  
-  # Create the time series plot
-  ggplot(filtered_data, aes(x = date, y = .data[[input$econ_var]])) +
-    geom_line(color = "steelblue", size = 1) +
-    theme_bw() +
-    labs(
-      title = paste("Time Series of", var_label),
-      x = "Year",
-      y = var_label
-    ) +
-    scale_x_date(
-      date_breaks = "5 years", 
-      date_labels = "%Y"
-    ) +
-    scale_y_continuous(labels = comma_format()) +
-    theme(
-      plot.title = element_text(hjust = 0.5, size = 14),
-      axis.text = element_text(size = 10),
-      axis.title = element_text(size = 12)
+  dataset_economics |>
+    filter(
+      date >= as.Date(paste0(input$year_range[1], "-01-01")),
+      date <= as.Date(paste0(input$year_range[2], "-12-31"))
+    ) |>
+    create_ts_plot(
+      var = selected_var$var,
+      var_label = input$econ_var,
+      units = selected_var$units
     )
 })
 ```
